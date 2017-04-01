@@ -75,8 +75,10 @@ namespace Assets.Scripts.Platforms
                     platform.AddComponent<Freezing>();
                     break;
                 case PlatformTypes.Carton:
+                    platform.AddComponent<EmptyPlatform>();
+                    break;
                 case PlatformTypes.Empty:
-                    //todo
+                    platform.AddComponent<EmptyPlatform>();
                     break;
             }
         }
@@ -93,12 +95,12 @@ namespace Assets.Scripts.Platforms
             if (_lastPlatformTypes[0] != PlatformTypes.Empty && _lastPlatformTypes[0] != PlatformTypes.Carton &&
                 _lastPlatformTypes[1] != PlatformTypes.Trampoline)
                 if (_random.NextDouble() < Constants.EmptyPlatformChance)
-                    return Constants.PlatformsNumber;
+                    return _random.Next((int) PlatformTypes.Carton, (int) PlatformTypes.Empty + 1);
             if (_random.NextDouble() < Constants.SimplePlatformChance)
                 return 0;
-            var index = _random.Next(1, Constants.PlatformsNumber);
-            if (index == (int) PlatformTypes.Empty || index == (int) PlatformTypes.Carton)
-                index = GetAvailablePlatformIndex();
+            var index = Constants.PlatformsNumber;
+            while (index == (int) PlatformTypes.Empty || index == (int) PlatformTypes.Carton)
+                index = _random.Next(1, (int) PlatformTypes.Empty - 1);
             return index;
         }
 

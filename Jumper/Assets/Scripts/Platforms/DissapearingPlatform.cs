@@ -9,8 +9,7 @@ namespace Assets.Scripts.Platforms
         {
             if (GetComponent<SpriteRenderer>().sprite != null)
                 GetComponent<SpriteRenderer>().sprite = null;
-            GetComponent<BoxCollider2D>().isTrigger = true;
-
+            gameObject.AddComponent<EmptyPlatform>();
         }
 
         private IEnumerator ThisCoroutine()

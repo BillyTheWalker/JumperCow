@@ -2,6 +2,11 @@
 {
     public enum PlatformTypes
     {
-        Simple,Dissapearing,Trampoline,Carton,Freezing,Empty
+        Simple,
+        Dissapearing,
+        Trampoline,
+        Freezing,
+        Carton,
+        Empty
     }
 }
