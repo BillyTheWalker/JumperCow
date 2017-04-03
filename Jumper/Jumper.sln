@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jumper.Plugins", "Jumper.Plugins.csproj", "{D0C97440-8E58-4FF0-84A6-29923701CD6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jumper", "Jumper.csproj", "{B8A0DF9D-52E0-E2D8-DF59-2A9AF5EF8D2E}"

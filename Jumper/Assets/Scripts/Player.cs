@@ -10,6 +10,7 @@ namespace Assets.Scripts
         private GameObject _currentPlatform;
         public static Player Instance { get; private set; }
         [HideInInspector] public bool OnTrampoline;
+        public float JumpTime = Constants.JumpTime;
 
         private void Awake()
         {
@@ -37,7 +38,7 @@ namespace Assets.Scripts
 
             if (_jumped) return;
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && !OnTrampoline)
             {
                 Jump(1);
             }
@@ -49,20 +50,21 @@ namespace Assets.Scripts
 
         private void Jump(int distance)
         {
+            var jumpTime = JumpTime;
             LeanTween.pause(gameObject);
             OnTrampoline = false;
             _jumped = true;
-            LeanTween.moveLocalX(gameObject, GetFallPosition(distance), Constants.JumpTime)
+            LeanTween.moveLocalX(gameObject, GetFallPosition(distance), jumpTime)
                 .setOnComplete(() => { gameObject.MoveLeft(); });
-            LeanTween.moveLocalY(gameObject, Constants.JumpHight, Constants.HalfJumpTime)
-                .setOnComplete(() => { LeanTween.moveLocalY(gameObject, 0, Constants.HalfJumpTime); });
+            LeanTween.moveLocalY(gameObject, Constants.JumpHight, jumpTime / 2)
+                .setOnComplete(() => { LeanTween.moveLocalY(gameObject, 0, jumpTime / 2); });
         }
 
 
         private float GetFallPosition(int distance)
         {
-            return (_currentPlatform.transform.localPosition.x + distance*Constants.PlatformSize) -
-                   GameController.Instance.MovementSpeed*Constants.JumpTime;
+            return (_currentPlatform.transform.localPosition.x + distance * Constants.PlatformSize) -
+                   GameController.Instance.MovementSpeed * JumpTime;
         }
 
         public void Die()

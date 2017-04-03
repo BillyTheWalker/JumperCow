@@ -14,7 +14,7 @@ namespace Assets.Scripts.Platforms
 
         private IEnumerator ThisCoroutine()
         {
-            yield return new WaitForSeconds(Constants.ActionTime);
+            yield return new WaitForSeconds(Constants.TimeToDissapear);
             Dissapear();
         }
 

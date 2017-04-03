@@ -13,5 +13,15 @@ namespace Assets.Scripts
         {
             return x/GameController.Instance.MovementSpeed;
         }
+
+        public static void MoveLeft(this GameObject gameObject, float speed)
+        {
+            LeanTween.moveLocalX(gameObject, 0, GetTime(gameObject.transform.localPosition.x, speed));
+        }
+
+        private static float GetTime(float x, float speed)
+        {
+            return x/speed;
+        }
     }
 }
