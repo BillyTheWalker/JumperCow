@@ -31,9 +31,10 @@
             CloudMinSpawnDelay = .2f,
             CloudMaxSpawnDelay = 1f,
             BulletOffsetX = .1f,
-            BulletOffsetY = .45f,
-            FlyingEnemyY = -.8f,
-            SimpleEnemyY = -1.4f;
+            BulletOffsetY = .4f,
+            FlyingEnemyY = .6f,
+            SimpleEnemyY = .5f,
+            ShotDelay = .5f;
 
         public const double EmptyPlatformChance = .2,
             SimplePlatformChance = .5,

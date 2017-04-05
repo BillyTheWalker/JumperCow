@@ -20,7 +20,8 @@ namespace Assets.Scripts.Platforms
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            StartCoroutine(ThisCoroutine());
+            if (other.gameObject.GetComponent<Player>())
+                StartCoroutine(ThisCoroutine());
         }
     }
 }

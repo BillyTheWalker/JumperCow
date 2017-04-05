@@ -16,10 +16,6 @@ namespace Assets.Scripts.Platforms
                     Die();
             }
         }
-        private void Start()
-        {
-
-        }
 
         private void Die()
         {
@@ -28,13 +24,17 @@ namespace Assets.Scripts.Platforms
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (!other.gameObject.GetComponent<Platform>())
+                HealthPoints--;
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
             if (other.gameObject.GetComponent<Player>())
             {
                 Player.Instance.Die();
                 return;
             }
-            if (!other.gameObject.GetComponent<Platform>())
-                Die();
         }
     }
 }

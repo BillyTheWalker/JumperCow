@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\Platforms\EmptyPlatform.cs" />
     <Compile Include="Assets\Scripts\Platforms\Enemy.cs" />
     <Compile Include="Assets\Scripts\Platforms\EnemyTypes.cs" />
+    <Compile Include="Assets\Scripts\Platforms\FreezController.cs" />
     <Compile Include="Assets\Scripts\Platforms\Freezing.cs" />
     <Compile Include="Assets\Scripts\Platforms\Platform.cs" />
     <Compile Include="Assets\Scripts\Platforms\PlatformController.cs" />

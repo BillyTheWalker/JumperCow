@@ -10,9 +10,11 @@ namespace Assets.Scripts
         private readonly Random _random = new Random();
         private Sprite[] _bullets;
         private bool _jumped;
+        private bool _canShot = true;
         private GameObject _currentPlatform;
         public static Player Instance { get; private set; }
-        [HideInInspector] public bool OnTrampoline;
+        [HideInInspector]
+        public bool OnTrampoline;
         [HideInInspector]
         public float JumpTime = Constants.JumpTime;
         public GameObject Bullet;
@@ -42,7 +44,7 @@ namespace Assets.Scripts
                 Die();
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && _canShot)
             {
                 Shot();
             }
@@ -86,6 +88,21 @@ namespace Assets.Scripts
             bullet.GetComponent<SpriteRenderer>().sprite = _bullets[_random.Next(_bullets.Length)];
             bullet.transform.localPosition = new Vector3(position.x + Constants.BulletOffsetX, position.y + Constants.BulletOffsetY);
             bullet.MoveRight(Constants.BulletSpeed);
+            StartCoroutine(BulletLifetime(bullet));
+            StartCoroutine(ShotDelay());
+        }
+
+        private IEnumerator ShotDelay()
+        {
+            _canShot = false;
+            yield return new WaitForSeconds(Constants.ShotDelay);
+            _canShot = true;
+        }
+
+        private IEnumerator BulletLifetime(GameObject bullet)
+        {
+            yield return new WaitForSeconds(5);
+            if (bullet) Destroy(bullet);
         }
 
         public void Die()
