@@ -8,14 +8,16 @@ namespace Assets.Scripts.Platforms
         private float _freezedJumpTime = Constants.JumpTime + Constants.FreezeEffect;
 
 
-        private void OnTriggerStay2D(Collider2D collision)
+        private void OnTriggerStay2D(Collider2D other)
         {
+            if (!other.gameObject.GetComponent<Player>()) return;
             if (Player.Instance.JumpTime == _freezedJumpTime) return;
             Player.Instance.JumpTime = _freezedJumpTime;
         }
 
-        private void OnTriggerExit2D(Collider2D collision)
+        private void OnTriggerExit2D(Collider2D other)
         {
+            if (!other.gameObject.GetComponent<Player>()) return;
             FreezController.Instance.Freeze();
         }
 

@@ -25,7 +25,10 @@ namespace Assets.Scripts.Platforms
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.GetComponent<Platform>())
+            {
                 HealthPoints--;
+                Destroy(other.gameObject);
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D other)
