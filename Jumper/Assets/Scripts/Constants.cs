@@ -2,7 +2,9 @@
 {
     public class Constants
     {
-        public const string SpritesFolder = "Sprites/Platforms";
+        public const string PlatformSpritesFolder = "Sprites/Platforms",
+            BulletsSpritesFolder = "Sprites/lines",
+            EnemiesSpriteFolder = "sprites/monster";
 
         public const int StartPoint = -11,
             PlatformSize = 5,
@@ -16,7 +18,8 @@
             CloudsUpper = 27,
             CloudMaxScale = 4,
             CloudMinSpeed = 2,
-            CloudMaxSpeed = 10;
+            CloudMaxSpeed = 10,
+            BulletSpeed = 7;
 
         public const float JumpTime = .5f,
             HalfJumpTime = .25f,
@@ -26,9 +29,14 @@
             JumpLength = 2.5f,
             PlatformPositionY = -3f,
             CloudMinSpawnDelay = .2f,
-            CloudMaxSpawnDelay = 1f;
+            CloudMaxSpawnDelay = 1f,
+            BulletOffsetX = .1f,
+            BulletOffsetY = .45f,
+            FlyingEnemyY = -.8f,
+            SimpleEnemyY = -1.4f;
 
         public const double EmptyPlatformChance = .2,
-            SimplePlatformChance = .5;
+            SimplePlatformChance = .5,
+            EnemySpawnChance = .05;
     }
 }

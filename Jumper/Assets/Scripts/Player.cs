@@ -1,16 +1,21 @@
 ﻿using System.Collections;
 using Assets.Scripts.Platforms;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Assets.Scripts
 {
     public class Player : MonoBehaviour
     {
+        private readonly Random _random = new Random();
+        private Sprite[] _bullets;
         private bool _jumped;
         private GameObject _currentPlatform;
         public static Player Instance { get; private set; }
         [HideInInspector] public bool OnTrampoline;
+        [HideInInspector]
         public float JumpTime = Constants.JumpTime;
+        public GameObject Bullet;
 
         private void Awake()
         {
@@ -22,6 +27,7 @@ namespace Assets.Scripts
             {
                 Destroy(this);
             }
+            _bullets = Resources.LoadAll<Sprite>(Constants.BulletsSpritesFolder);
         }
 
         private void Start()
@@ -31,9 +37,14 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            if (transform.localPosition.x <= Constants.LeftBorder || transform.localPosition.y <= Constants.LowerBorder)
+            if (transform.localPosition.x <= Constants.LeftBorder)
             {
                 Die();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Shot();
             }
 
             if (_jumped) return;
@@ -56,8 +67,8 @@ namespace Assets.Scripts
             _jumped = true;
             LeanTween.moveLocalX(gameObject, GetFallPosition(distance), jumpTime)
                 .setOnComplete(() => { gameObject.MoveLeft(); });
-            LeanTween.moveLocalY(gameObject, Constants.JumpHight, jumpTime / 2)
-                .setOnComplete(() => { LeanTween.moveLocalY(gameObject, 0, jumpTime / 2); });
+            LeanTween.moveLocalY(gameObject, transform.localPosition.y + Constants.JumpHight, jumpTime / 2)
+                .setOnComplete(() => { LeanTween.moveLocalY(gameObject, transform.localPosition.y - Constants.JumpHight, jumpTime / 2).setOnComplete(() => { _jumped = false; }); });
         }
 
 
@@ -65,6 +76,16 @@ namespace Assets.Scripts
         {
             return (_currentPlatform.transform.localPosition.x + distance * Constants.PlatformSize) -
                    GameController.Instance.MovementSpeed * JumpTime;
+        }
+
+        private void Shot()
+        {
+            var position = transform.localPosition;
+            var bullet = Instantiate(Bullet);
+            bullet.transform.parent = transform.parent;
+            bullet.GetComponent<SpriteRenderer>().sprite = _bullets[_random.Next(_bullets.Length)];
+            bullet.transform.localPosition = new Vector3(position.x + Constants.BulletOffsetX, position.y + Constants.BulletOffsetY);
+            bullet.MoveRight(Constants.BulletSpeed);
         }
 
         public void Die()
@@ -75,14 +96,7 @@ namespace Assets.Scripts
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.GetComponent<Platform>())
-            {
-                _jumped = false;
                 _currentPlatform = other.gameObject;
-            }
-            else
-            {
-                Die();
-            }
         }
     }
 }
