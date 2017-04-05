@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Assets.Scripts;
 
 namespace Assets.Scripts.Platforms
 {

@@ -19,7 +19,12 @@
             CloudMaxScale = 4,
             CloudMinSpeed = 2,
             CloudMaxSpeed = 10,
-            BulletSpeed = 7;
+            BulletSpeed = 7,
+            ComplicationDistance = 50,
+            ReliefDistance = 15,
+            ComplicationValue = 5,
+            MaxSpeed = 10,
+            MinSpeed = 5;
 
         public const float JumpTime = .5f,
             HalfJumpTime = .25f,

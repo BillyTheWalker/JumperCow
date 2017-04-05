@@ -9,7 +9,7 @@ namespace Assets.Scripts
     {
         private readonly Random _random = new Random();
         private Sprite[] _bullets;
-        private bool _jumped;
+        public bool Jumped { get; private set; }
         private bool _canShot = true;
         private GameObject _currentPlatform;
         public static Player Instance { get; private set; }
@@ -49,13 +49,13 @@ namespace Assets.Scripts
                 Shot();
             }
 
-            if (_jumped) return;
+            if (Jumped) return;
 
-            if (Input.GetMouseButton(0) && !OnTrampoline)
+            if (Input.GetMouseButtonDown(0) && !OnTrampoline)
             {
                 Jump(1);
             }
-            else if (Input.GetMouseButton(1) || OnTrampoline)
+            else if (Input.GetMouseButtonDown(1) || OnTrampoline)
             {
                 Jump(2);
             }
@@ -66,11 +66,11 @@ namespace Assets.Scripts
             var jumpTime = JumpTime;
             LeanTween.pause(gameObject);
             OnTrampoline = false;
-            _jumped = true;
+            Jumped = true;
             LeanTween.moveLocalX(gameObject, GetFallPosition(distance), jumpTime)
                 .setOnComplete(() => { gameObject.MoveLeft(); });
             LeanTween.moveLocalY(gameObject, transform.localPosition.y + Constants.JumpHight, jumpTime / 2)
-                .setOnComplete(() => { LeanTween.moveLocalY(gameObject, transform.localPosition.y - Constants.JumpHight, jumpTime / 2).setOnComplete(() => { _jumped = false; }); });
+                .setOnComplete(() => { LeanTween.moveLocalY(gameObject, transform.localPosition.y - Constants.JumpHight, jumpTime / 2).setOnComplete(() => { Jumped = false; }); });
         }
 
 
@@ -87,7 +87,7 @@ namespace Assets.Scripts
             bullet.transform.parent = transform.parent;
             bullet.GetComponent<SpriteRenderer>().sprite = _bullets[_random.Next(_bullets.Length)];
             bullet.transform.localPosition = new Vector3(position.x + Constants.BulletOffsetX, position.y + Constants.BulletOffsetY);
-            bullet.MoveRight(Constants.BulletSpeed);
+            bullet.MoveRight(Constants.BulletSpeed*5);
             StartCoroutine(BulletLifetime(bullet));
             StartCoroutine(ShotDelay());
         }

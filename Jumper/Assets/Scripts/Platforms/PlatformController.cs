@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Random = System.Random;
 
 namespace Assets.Scripts.Platforms
@@ -13,6 +14,7 @@ namespace Assets.Scripts.Platforms
 
         public GameObject Platform;
         public static PlatformController Instance { get; private set; }
+        public LinkedList<GameObject> ActivePlatforms = new LinkedList<GameObject>();
 
         private void Awake()
         {
@@ -78,6 +80,9 @@ namespace Assets.Scripts.Platforms
             platform.transform.parent = gameObject.transform;
             platform.transform.localPosition = new Vector3(positionX, Constants.PlatformPositionY);
             platform.AddComponent<Platform>();
+            ActivePlatforms.AddFirst(platform);
+            if (ActivePlatforms.Count > 16)
+                ActivePlatforms.RemoveLast();
             return platform;
         }
 
@@ -131,6 +136,14 @@ namespace Assets.Scripts.Platforms
                 return;
             }
             platform.GetComponent<SpriteRenderer>().sprite = _platforms[(int)_lastPlatformTypes[0]];
+        }
+
+        public void RefreshMovement()
+        {
+            foreach (var platform in ActivePlatforms)
+            {
+                platform.Refresh();
+            }
         }
     }
 }

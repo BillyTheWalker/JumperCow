@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\CloudController.cs" />
     <Compile Include="Assets\Scripts\Constants.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\IMyFirstInterface.cs" />
     <Compile Include="Assets\Scripts\MovementBehaviour.cs" />
     <Compile Include="Assets\Scripts\Platforms\DissapearingPlatform.cs" />
     <Compile Include="Assets\Scripts\Platforms\EmptyPlatform.cs" />

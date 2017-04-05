@@ -33,5 +33,11 @@ namespace Assets.Scripts
         {
             return x / speed;
         }
+
+        public static void Refresh(this GameObject gObject)
+        {
+            LeanTween.pause(gObject);
+            gObject.MoveLeft();
+        }
     }
 }
